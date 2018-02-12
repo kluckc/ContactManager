@@ -11,21 +11,77 @@ package app1;
  */
 public class ContactApp {
     
-    Contact[] contacts; 
-    int contactCount = 0;
-
-    public ContactApp() {
-        this.contacts = new Contact[100];
+   public String[] getContactNames() {
+        return contactNames;
     }
-    void addContact(String firstName, String lastName, String phoneNumber, String email){
+
+    /**
+     * @param contactNames the contactNames to set
+     */
+    public void setContactNames(String[] contactNames) {
+        this.contactNames = contactNames;
+    }
+
+    
+    public Contact[] getContacts() {
+        return contacts;
+    }
+
+    /**
+     * @param contacts the contacts to set
+     */
+    public void setContacts(Contact[] contacts) {
+        this.contacts = contacts;
+    }
+
+    /**
+     * @return the contactCount
+     */
+    public int getContactCount() {
+        return contactCount;
+    }
+
+    /**
+     * @param contactCount the contactCount to set
+     */
+    public void setContactCount(int contactCount) {
+        this.contactCount = contactCount;
+    }
+    private Contact[]contacts = new Contact[100];
+    private int contactCount =0;
+    private String[]contactNames =  new String[100];
+
+    public void addContact (
+            String firstName,
+            String lastName,
+            String phone,
+            String email) {
         Contact contact = new Contact();
-        contact.setFirstname(firstName);
-        contact.setLastname(lastName);
-        contact.setPhonenumber(phoneNumber);
+        contact.setFirstName(firstName);
+        contact.setLastName(lastName);
+        contact.setPhone(phone);
         contact.setEmail(email);
-        
-       
-        contacts[contactCount++] = contact;
+        getContacts()[getContactCount()]=contact;
+        getContactNames()[getContactCount()]=contact.getFirstName();
+        setContactCount(getContactCount() + 1);       
+    }
+    public void editContact (String firstName,
+            String lastName,
+            String phone,
+            String email,
+            int position) {
+        Contact contact = contacts[position];
+        contact.setFirstName(firstName);
+        contact.setLastName(lastName);
+        contact.setPhone(phone);
+        contact.setEmail(email);
+        getContacts()[position]=contact;
+        getContactNames()[position]=contact.getFirstName();
+            
+    }
+    public void delContact  (int position){
+        contacts[position]=null;
+        contactNames[position]="";
     }
     
     

@@ -14,9 +14,6 @@ public class ContactManager {
      ContactApp app = new ContactApp();
      MainForm ns = new MainForm(app);
      ns.setVisible(true);
-
-    
-    
-    }
+        }
      }
 

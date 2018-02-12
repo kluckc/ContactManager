@@ -10,22 +10,19 @@ package app1;
  * @author glimp
  */
 public class AddEditForm extends javax.swing.JDialog {
-
-    /**
-     * Creates new form JDialog
-     */
-    public AddEditForm(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    ContactApp app;
+    MainForm main;
+    public int position;
+    public boolean isEdit;
+    
+    public AddEditForm(ContactApp app, MainForm ns) {
+        this.app=app;
+        this.main=ns;
         initComponents();
-        jTextField1.setText("");
-    jTextField2.setText("");
-    jTextField3.setText("");
-    jTextField4.setText("");
+        
     }
 
-    AddEditForm(ContactApp app, MainForm aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,16 +159,31 @@ public class AddEditForm extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (isEdit==true){
+            app.editContact(jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),jTextField4.getText(), position);
+            main.updateJList();
+            main.refreshFields(position);
+            this.dispose();
+       
+        }
+        else {
+            app.addContact(jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),jTextField4.getText());
+            main.updateJList();
+            main.refreshFields(app.getContactCount()-1);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-System.exit(0);        // TODO add your handling code here:
+       // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+   void setFields(String[]data){
+        jTextField1.setText(data[0]);
+        jTextField2.setText(data[1]);
+        jTextField3.setText(data[2]);
+        jTextField4.setText(data[3]);
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

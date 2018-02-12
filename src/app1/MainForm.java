@@ -14,16 +14,17 @@ public class MainForm extends javax.swing.JFrame  {
     /**
      * Creates new form NewJFrame
      */
-    ContactApp app;
-    public MainForm(ContactApp ch) {
-        initComponents();
-        this.app = ch;
-        jTextField1.setText("");
-    jTextField2.setText("");
-    jTextField3.setText("");
-    jTextField4.setText("");
-    jList1.setListData(new String[0]); 
+     ContactApp app;
+    String[]listContacts=new String[100];
+ 
     
+    public MainForm(ContactApp app) {
+        initComponents();
+        this.app=app;
+    }
+    
+    void updateJList(){
+        jList1.setListData(app.getContactNames());
     }
 
     /**
@@ -171,7 +172,13 @@ public class MainForm extends javax.swing.JFrame  {
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
-        // TODO add your handling code here:
+        if (!"".equals(jTextField1.getText())){
+            
+            AddEditForm newForm = new AddEditForm(app, this);
+            newForm.setVisible(true);
+            newForm.setFields(currentData());
+            newForm.position=jList1.getSelectedIndex();
+            newForm.isEdit=true;
     }//GEN-LAST:event_editbtnActionPerformed
 
     private void quitbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitbtnActionPerformed
@@ -183,16 +190,36 @@ public class MainForm extends javax.swing.JFrame  {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        // TODO add your handling code here:
+        System.out.println(jList1.getSelectedIndex());
+        if (jList1.getSelectedIndex()>=0&&app.getContacts()[jList1.getSelectedIndex()]!=null) {
+            
+            jTextField1.setText(app.getContacts()[jList1.getSelectedIndex()].getFirstName());
+            jTextField2.setText(app.getContacts()[jList1.getSelectedIndex()].getLastName());
+            jTextField3.setText(app.getContacts()[jList1.getSelectedIndex()].getPhone());
+            jTextField4.setText(app.getContacts()[jList1.getSelectedIndex()].getEmail());
     }//GEN-LAST:event_jList1ValueChanged
 
     private void deletebtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtn1ActionPerformed
-        // TODO add your handling code here:
+            
     }//GEN-LAST:event_deletebtn1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+   private void resetFields() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+    }
+    void refreshFields(int position) {
+        jList1.setSelectedIndex(position);
+    }
+    String[] currentData () {
+      String[] data = new String[4];
+      data[0]=jTextField1.getText();
+      data[1]=jTextField2.getText();
+      data[2]=jTextField3.getText();
+      data[3]=jTextField4.getText();
+      return data;
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnadd;
